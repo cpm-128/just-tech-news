@@ -9,6 +9,8 @@ const { User } = require('../../models');
 router.get('/', (req, res) => {
     // access the User model and run .findAll() method
     User.findAll()
+        // any data found fro mthe findAll method will THEN be assigned the dbUserData variable
+        // pass it as an argument to the res.json method
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
             console.log(err);
@@ -26,7 +28,7 @@ router.get('/:id', (req, res) => {
     })
         // check the id exists
         .then(dbUserData => {
-            if (!dbUser) {
+            if (!dbUserData) {
                 res.status(404).json({
                     message: 'No user found with this id.'
                 });
