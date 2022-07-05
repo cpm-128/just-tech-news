@@ -8,7 +8,10 @@ const { User } = require('../../models');
 // GET /api/users
 router.get('/', (req, res) => {
     // access the User model and run .findAll() method
-    User.findAll()
+    User.findAll({
+        // do not display user password
+        attributes: { exclude: ['password'] }
+    })
         // any data found fro mthe findAll method will THEN be assigned the dbUserData variable
         // pass it as an argument to the res.json method
         .then(dbUserData => res.json(dbUserData))
@@ -21,6 +24,8 @@ router.get('/', (req, res) => {
 // GET /api/users/1
 router.get('/:id', (req, res) => {
     User.findOne({
+        // do not display user password
+        attributes: { exclude: ['password'] },
         // passing an argument into the findOne method
         where: {
             id: req.params.id
