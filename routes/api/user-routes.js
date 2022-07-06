@@ -62,6 +62,33 @@ router.post('/', (req, res) => {
         });
 });
 
+// Login Route for Authentication - compares user-entered password to hashed password
+router.post('/login', (req, res) => {
+    // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(dbUserData => {
+        // does user exist?
+        if (!dbUserData) {
+            res.status(400).json({ message: 'No user with that email address is found.' });
+            return;
+        }
+
+        // verify user using the password they entered in the body
+        const validPassword = dbUserData.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect password.' });
+            return;
+        }
+
+        res.json({ user: dbUserData, message: 'You are now logged in.' });
+
+    });
+});
+
 // PUT /api/users/1
 router.put('/:id', (req, res) => {
     // expects {username: 'Lernantino', meail: 'lernantino@gmail.com', password: 'password1234'}
