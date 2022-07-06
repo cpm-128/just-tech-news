@@ -70,6 +70,8 @@ router.put('/:id', (req, res) => {
     // req.body to provide new data
     // req.params.id to indicate exactly where the new data goes
     User.update(req.body, {
+        // allow to hash a new password update
+        individualHooks: true,
         where: {
             id: req.params.id
         }
