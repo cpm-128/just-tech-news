@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { Post, User, Vote } = require('../../models');
+const { Post, User, Vote, Comment } = require('../../models');
 const sequelize = require('../../config/connection');
 
-// GET all posts, from the ./api/posts/ path that is inherited
+// GET all posts, from the ./api/posts/ path that is inherited and display WITH comments
 router.get('/', (req, res) => {
     Post.findAll({
         attributes: [
@@ -16,9 +16,17 @@ router.get('/', (req, res) => {
         order: [['created_at', 'DESC']],
         // include is the sequlize version of join
         include: [
-            {
+            { // author
                 model: User,
                 attributes: ['username']
+            },
+            { // comments
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
             }
         ]
     })
@@ -30,7 +38,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET post by id
+// GET post by id WITH comments
 router.get('/:id', (req, res) => {
     Post.findOne({
         where: {
@@ -44,9 +52,17 @@ router.get('/:id', (req, res) => {
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         include: [
-            {
+            { // author
                 model: User,
                 attributes: ['username']
+            },
+            { // comments
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
             }
         ]
     })
