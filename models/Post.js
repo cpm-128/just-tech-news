@@ -48,7 +48,7 @@ Post.init(
             type: DataTypes.STRING,
             allowNull: false,
             // Sequelize validation for a url
-            validata: {
+            validate: {
                 isURL: true
             }
         },
