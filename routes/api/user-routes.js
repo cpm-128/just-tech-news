@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post, Vote } = require('../../models');
 
 // ===============
 // CRUD OPERATIONS
@@ -29,7 +29,20 @@ router.get('/:id', (req, res) => {
         // passing an argument into the findOne method
         where: {
             id: req.params.id
-        }
+        },
+        // posts that this user voted on
+        include: [
+            {
+                model: Post,
+                attributes: ['id', 'title', 'post_url', 'created_at']
+            },
+            {
+                model: Post,
+                attributes: ['title'],
+                through: Vote,
+                as: 'voted_posts'
+            }
+        ]
     })
         // check the id exists
         .then(dbUserData => {
