@@ -29,10 +29,11 @@ router.get('/', (req, res) => {
         ]
     })
     .then(dbPostData => {
+        // get the entire array of posts and serialize it
+        const posts = dbPostData.map(post => post.get({ plain: true }));
         // pass a single post object into the homepage template
         //console.log('>> Post data ??' , dbPostData[0])
-        // plain: true is so you dont get a bunch of the other object data you're not needing
-        res.render('homepage', dbPostData[0].get({ plain: true }));
+        res.render('homepage', { posts });
     })
     .catch(err => {
         console.log(err);

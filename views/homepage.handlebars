@@ -1,4 +1,6 @@
 <ol class="post-list">
+    {{!-- loop over the posts array in homepage-routes.js --}}
+    {{#each posts}}
     <li>
         <article class="post">
 
@@ -15,4 +17,5 @@
 
         </article>
     </li>
+    {{/each}}
 </ol>
