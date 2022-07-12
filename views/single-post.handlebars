@@ -16,6 +16,8 @@
 </article>
 
 {{!-- LEAVE A COMMENT --}}
+{{!-- the loggedIn variable comes from home-routes.js --}}
+{{#if loggedIn}}
 <form class="comment-form">
 
     <div>
@@ -28,6 +30,7 @@
     </div>
 
 </form>
+{{/if}}
 
 {{!-- DISPLAY COMMENTS --}}
 <div class="comments">

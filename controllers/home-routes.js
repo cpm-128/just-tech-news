@@ -54,7 +54,7 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-// GET a single post with comments and votes
+// GET a single post with comments and votes for logged in users only
 router.get('/post/:id', (req, res) => {
     Post.findOne({
         where: {
@@ -94,7 +94,10 @@ router.get('/post/:id', (req, res) => {
         const post = dbPostData.get({ plain: true });
 
         // pass data to the template
-        res.render('single-post', { post });
+        res.render('single-post', {
+            post,
+            loggedIn: req.session.loggedIn
+        });
     })
     .catch(err => {
         console.log(err);
