@@ -1,3 +1,5 @@
+{{!-- POST DATA --}}
+
 <article class="post">
 
     <div class="title">
@@ -12,3 +14,36 @@
     </div>
 
 </article>
+
+{{!-- LEAVE A COMMENT --}}
+<form class="comment-form">
+
+    <div>
+        <textarea name="comment-body"></textarea>
+    </div>
+
+    <div>
+        <button type="submit">Add comment</button>
+        <button type="button" class="upvote-btn">Upvote</button>
+    </div>
+
+</form>
+
+{{!-- DISPLAY COMMENTS --}}
+<div class="comments">
+
+    {{#each post.comments }}
+    <section class="comment">
+
+        <div class="meta">
+            {{user.username}} on {{created_at}}
+        </div>
+
+        <div class="text">
+            {{comment_text}}
+        </div>
+
+    </section>
+    {{/each}}
+
+</div>
