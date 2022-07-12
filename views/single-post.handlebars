@@ -53,5 +53,8 @@
 </div>
 
 {{!-- static scripts to add functionality to comment box and upvoting --}}
+{{!-- only render if logged in. will not break anything, but just unnecessary energy --}}
+{{#if loggedIn}}
 <script src="/javascript/comment.js"></script>
 <script src="/javascript/upvote.js"></script>
+{{/if}}
