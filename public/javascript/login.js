@@ -1,5 +1,9 @@
+// ===============
+// CREATE NEW USER
+// ===============
+
 // form is submitted
-function signupFormHandler(event) {
+async function signupFormHandler(event) {
     event.preventDefault();
 
     // GET the form data from the server
@@ -9,7 +13,8 @@ function signupFormHandler(event) {
 
     // POST the form data to the server after validation
     if (username && email && password) {
-        fetch('/api/users', {
+        // this is the Promise
+        const response = await fetch('/api/users', {
           method: 'post',
           body: JSON.stringify({
             username,
@@ -17,9 +22,51 @@ function signupFormHandler(event) {
             password
           }),
           headers: { 'Content-Type': 'application/json' }
-        }).then((response) => {console.log(response)})
-      }
-    }
+        });
+        // check the response status
+        if (response.ok) {
+            console.log('>> SUCCESS. User created. <<');
+        } else {
+            alert(response.statusText)
+        }
+      };
+    };
 
 // listen for the submit button
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
+
+// ==========
+// USER LOGIN
+// ==========
+
+// form is submitted
+async function loginFormHandler(event) {
+    event.preventDefault();
+
+    // GET the form data from the server
+    const email = document.querySelector('#email-login').value.trim();
+    const password = document.querySelector('#password-login').value.trim();
+
+    // POST the form data to the server after validation
+    if (email && password) {
+        // this is the Promise
+        const response = await fetch('/api/users/login', {
+          method: 'post',
+          body: JSON.stringify({
+            email,
+            password
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        // check the response status
+        if (response.ok) {
+            //console.log('>> SUCCESS. User logged in. <<');
+            document.location.replace('/');
+        } else {
+            alert(response.statusText)
+        }
+      };
+    };
+
+// listen for the submit button
+document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
