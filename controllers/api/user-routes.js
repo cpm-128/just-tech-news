@@ -122,6 +122,17 @@ router.post('/login', (req, res) => {
     });
 });
 
+// LOGOUT by destroying session variables and resetting cookie
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
+    });
+
 // PUT /api/users/1
 router.put('/:id', (req, res) => {
     // expects {username: 'Lernantino', meail: 'lernantino@gmail.com', password: 'password1234'}
@@ -170,17 +181,6 @@ router.delete('/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-});
-
-// LOGOUT by destroying session variables and resetting cookie
-router.post('/logout', (req, res) => {
-if (req.session.loggedIn) {
-    req.session.destroy(() => {
-        res.status(204).end();
-    });
-} else {
-    res.status(404).end();
-}
 });
 
 module.exports = router;
