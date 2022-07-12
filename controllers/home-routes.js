@@ -54,4 +54,21 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+// GET a single post with comments and votes
+router.get('/post/:id', (req, res) => {
+    const post = {
+        id: 1,
+        post_url: 'https://handlebarsjs.com/guide/',
+        title: 'Handlebars Docs',
+        created_at: new Date(),
+        vote_count: 10,
+        comments: [ {} , {} ],
+        user: {
+            username: 'test_user'
+        }
+    };
+    // where to render the above data, what to package it and send it as to the render template
+    res.render('single-post', { post });
+});
+
 module.exports = router;
