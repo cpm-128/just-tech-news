@@ -95,13 +95,17 @@ router.post('/', (req, res) => {
 
 // PUT/UPDATE the vote (MUST before dynamic /:id)
 router.put('/upvote', (req, res) => {
-    // custom static method created in models.Post.js
-    Post.upvote(req.body, { Vote })
-        .then(dbPostData => res.json(dbPostData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+    // make sure the session exists first
+    if (req.session) {
+        // pass session_id along with all destructured properties on req.body
+        // using the saved user_id propery on the session to insert a new record in the vote table
+        Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+            .then(updatedVoteData => res.json(updatedVoteData))
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    }
 });
 
 // PUT/UPDATE a post's title, identifying it by post id

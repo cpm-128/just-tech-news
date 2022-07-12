@@ -32,6 +32,7 @@
 {{!-- DISPLAY COMMENTS --}}
 <div class="comments">
 
+    {{!-- user the #each helper to iterate over the comments array --}}
     {{#each post.comments }}
     <section class="comment">
 
@@ -47,3 +48,7 @@
     {{/each}}
 
 </div>
+
+{{!-- static scripts to add functionality to comment box and upvoting --}}
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/upvote.js"></script>
