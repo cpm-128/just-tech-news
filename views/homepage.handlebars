@@ -2,20 +2,8 @@
     {{!-- loop over the posts array in homepage-routes.js --}}
     {{#each posts as |post|}}
     <li>
-        <article class="post">
-
-            <div class="title">
-                <a href="{{post.post_url}}" target="_blank">{{post.title}}</a>
-                <span>({{post.post_url}})</span>
-            </div>
-
-            <div class="meta">
-                {{post.vote_count}} point(s) by {{post.user.username}} on {{post.created_at}}
-                |
-                <a href="/post/{{id}}">{{post.connemts.length}} comment(s)</a>
-            </div>
-
-        </article>
+        {{!-- import the partial with the name of the partial and the object name--}}
+        {{> post-info post }}
     </li>
     {{/each}}
 </ol>
