@@ -18,25 +18,8 @@
 </form>
 {{/if}}
 
-{{!-- DISPLAY COMMENTS --}}
-<div class="comments">
-
-    {{!-- user the #each helper to iterate over the comments array --}}
-    {{#each post.comments }}
-    <section class="comment">
-
-        <div class="meta">
-            {{user.username}} on {{created_at}}
-        </div>
-
-        <div class="text">
-            {{comment_text}}
-        </div>
-
-    </section>
-    {{/each}}
-
-</div>
+{{!-- DISPLAY COMMENTS imported from comments partial--}}
+{{> comments post.comments}}
 
 {{!-- static scripts to add functionality to comment box and upvoting --}}
 {{!-- only render if logged in. will not break anything, but just unnecessary energy --}}
