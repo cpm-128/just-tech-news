@@ -1,19 +1,14 @@
-const express = require('express');
-const routes = require('./controllers');
-const sequelize = require('./config/connection');
-const helpers = require('./utils/helpers');
 // make the frontend available to the client via middleware
 const path = require('path');
-
-// use Handlebars.js as app's template engine with helper functions available
+const express = require('express');
+const session = require('express-session');
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({ helpers })
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const sequelize = require('./config/connection');
 // sessions and cookies
-const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sess = {
     secret: 'Super secret secret',
@@ -27,6 +22,11 @@ const sess = {
 
 app.use(session(sess));
 
+const helpers = require('./utils/helpers');
+
+// use Handlebars.js as app's template engine with helper functions available
+const hbs = exphbs.create({ helpers })
+
 // use Handlebars.js as app's template engine
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -37,6 +37,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // handle frontend public files
 app.use(express.static(path.join(__dirname, 'public')));
+
+const routes = require('./controllers');
 
 // turn on routes
 // routes must be after all static calls
