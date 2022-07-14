@@ -61,7 +61,7 @@ async function loginFormHandler(event) {
         // check the response status
         if (response.ok) {
             //console.log('>> SUCCESS. User logged in. <<');
-            document.location.replace('/');
+            document.location.replace('/dashboard');
         } else {
             alert(response.statusText)
         }
