@@ -19,3 +19,22 @@
   </form>
 
 </section>
+
+{{!-- if loggedin user has published posts... --}}
+{{#if posts.length}}
+<section>
+
+  <h2>Your Posts</h2>
+
+  <ol>
+    {{#each posts as |post|}}
+    <li>
+      {{!-- use the post-info partial to display post info --}}
+      {{> post-info post}}
+      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit Post</a>
+    </li>
+    {{/each}}
+  </ol>
+
+</section>
+{{/if}}
