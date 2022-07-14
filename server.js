@@ -1,12 +1,13 @@
 const express = require('express');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const helpers = require('./utils/helpers');
 // make the frontend available to the client via middleware
 const path = require('path');
 
-// use Handlebars.js as app's template engine
+// use Handlebars.js as app's template engine with helper functions available
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({})
+const hbs = exphbs.create({ helpers })
 
 const app = express();
 const PORT = process.env.PORT || 3001;

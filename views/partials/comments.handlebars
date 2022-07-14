@@ -6,7 +6,8 @@
     <section class="comment">
 
         <div class="meta">
-            {{user.username}} on {{created_at}}
+            {{!-- use the format_date helper function on the default created_at --}}
+            {{user.username}} on {{format_date created_at}}
         </div>
 
         <div class="text">
