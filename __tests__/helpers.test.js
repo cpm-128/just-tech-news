@@ -8,7 +8,6 @@ test('format_date() returns a date string', () => {
     expect(format_date(date)).toBe('3/20/2020');
 });
 
-//TODO check these two tests
 // plural word
 test('format_plural() correctly pluralizes words', () => {
     const word = format_plural('tiger', 2);

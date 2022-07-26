@@ -26,7 +26,7 @@ async function signupFormHandler(event) {
         // check the response status
         if (response.ok) {
             //console.log('>> SUCCESS. User created. <<');
-            document.location.replace('/dashboard/');
+            document.location.replace('/dashboard');
         } else {
             alert(response.statusText)
         }

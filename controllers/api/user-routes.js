@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { User, Post, Vote, Comment } = require('../../models');
-const withAuth = require('../../utils/auth');
 
 // ===============
 // CRUD OPERATIONS
@@ -70,7 +69,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST /api/users
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
     // expects {username: 'Lernantino', meail: 'lernantino@gmail.com', password: 'password1234'}
     User.create({
         username: req.body.username,
@@ -86,11 +85,15 @@ router.post('/', withAuth, (req, res) => {
 
                 res.json(dbUserData);
             });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
         });
 });
 
 // Login Route for Authentication - compares user-entered password to hashed password
-router.post('/login', withAuth, (req, res) => {
+router.post('/login', (req, res) => {
     // expects {email: 'lernantino@gmail.com', password: 'password1234'}
     User.findOne({
         where: {
@@ -113,7 +116,7 @@ router.post('/login', withAuth, (req, res) => {
 
         // save session information
         req.session.save(() => {
-            //declare session variables
+            //DECLARE session variables ON LOG IN
             req.session.user_id = dbUserData.id;
             req.session.username = dbUserData.username;
             req.session.loggedIn = true;
@@ -124,7 +127,7 @@ router.post('/login', withAuth, (req, res) => {
 });
 
 // LOGOUT by destroying session variables and resetting cookie
-router.post('/logout', withAuth, (req, res) => {
+router.post('/logout', (req, res) => {
     if (req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end();
@@ -135,7 +138,7 @@ router.post('/logout', withAuth, (req, res) => {
     });
 
 // PUT /api/users/1
-router.put('/:id', withAuth, (req, res) => {
+router.put('/:id', (req, res) => {
     // expects {username: 'Lernantino', meail: 'lernantino@gmail.com', password: 'password1234'}
 
     // if req.body has exact key/value pairs to match the model, you can use 'req.body' instread
@@ -164,7 +167,7 @@ router.put('/:id', withAuth, (req, res) => {
 });
 
 // DELETE /api/users/1
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', (req, res) => {
     User.destroy({
         where: {
             id: req.params.id
