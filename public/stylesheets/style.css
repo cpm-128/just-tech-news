@@ -8,18 +8,18 @@ html {
   padding: 0;
   margin: 0;
   font-family: sans-serif;
-  color: #333;
+  color: rgb(195,193,186);
 }
 
 a {
   text-decoration: none;
-  color: #225ca3;
+  color: rgb(32,85,107);
   font-weight: bold;
   transition: color 0.1s;
 }
 
 a:hover {
-  color: #3486eb;
+  color: rgb(32,85,107);
 }
 
 button {
